@@ -3,8 +3,15 @@ var fs = require('fs');
 
 var app = express.createServer(express.logger());
 
+var getIndex = function(indexFile){
+    var buffer = new Buffer(4000);
+    buffer = fs.readFileSync(indexFile);
+    return buffer.toString();
+};
+
 app.get('/', function(request, response) {
-  response.send(fs.readFileSync('index.html').toString());
+  var content = getIndex('index.html');
+  response.send(content);
 });
 
 var port = process.env.PORT || 5000;
